@@ -1,0 +1,61 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/user_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link type="text/css" href="static/style.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="sidebar">
+        <!-- logo -->
+        <span class="logo">
+            <img src="static/images/logo_2.png"  width="80" height="60"> 
+            <h1>GourmetGo</h1>
+        </span>
+            
+        <!-- list of menus -->
+        <div class="sidebar-menus">
+            <a href="http://127.0.0.1:5000/restaurant_homepage"><ion-icon name="storefront-outline"></ion-icon>Home</a>
+            <a href="http://127.0.0.1:5000/accepted_orders"><ion-icon name="chatbubbles-outline"></ion-icon>Accepted Orders</a>
+            <a href="http://127.0.0.1:5000/assign_da"><ion-icon name="notifications-outline"></ion-icon>Assign Delivery Agents</a>
+            <a href="http://127.0.0.1:5000/manage_menu"><ion-icon name="settings-outline"></ion-icon>Manage Menu</a>
+            <a href="http://127.0.0.1:5000/add_menu_category"><ion-icon name="settings-outline"></ion-icon>Add Menu Category</a>
+        </div>
+
+        <!-- logout -->
+        <div class="sidebar-logout">
+            <a href="/logout"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+        </div>
+    </div>
+    <div class="content1">
+		<div class="content2">
+				Delete Menu
+		</div>
+		<hr width="100%">
+			<br>
+			<form id='orderForm'>
+
+				<table>
+				<tr>
+				<td><span class="heading">Enter Item Id</span></td>
+				<td><input id ="itemId" class="input_name" type='text' name='name' required></td></tr>
+				</table>
+				<br>
+				<button id="delete_menu" class=".button">Delete</button>
+			</form>
+	</div>	
+</body>
+</html>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script>
+    document.getElementById('delete_menu').addEventListener('click', function(event) {
+        event.preventDefault();
+        
+        // Get the restaurant ID from the input field
+        let itemId = document.getElementById('itemId').value;
+        window.location.href = `/delete_menu?item_id=${encodeURIComponent(itemId)}`;
+    });
+</script>

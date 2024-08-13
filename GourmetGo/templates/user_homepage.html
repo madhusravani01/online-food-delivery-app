@@ -1,0 +1,139 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/user_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="sidebar">
+        <!-- logo -->
+        <span class="logo">
+            <img src="static/images/logo_2.png"  width="80" height="60"> 
+            <h1>GourmetGo</h1>
+        </span>
+            
+        <!-- list of menus -->
+        <div class="sidebar-menus">
+            <a href="http://127.0.0.1:5000/user_homepage"><ion-icon name="storefront-outline"></ion-icon>Home</a>
+            <a href="http://127.0.0.1:5000/orders"><ion-icon name="chatbubbles-outline"></ion-icon>My Orders</a>
+            <a href="#"><ion-icon name="chatbubbles-outline"></ion-icon>Contact Us</a>
+            <a href="#"><ion-icon name="notifications-outline"></ion-icon>Notifications</a>
+            <a href="#"><ion-icon name="settings-outline"></ion-icon>Setting</a>
+        </div>
+
+        <!-- logout -->
+        <div class="sidebar-logout">
+            <a href="/logout"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+        </div>
+    </div>
+
+    <!-- main -->
+    <div class="main">
+        <!-- main navbar -->
+        <div class="main-navbar">
+            <!-- menu when appear on mobile version -->
+            <ion-icon class="menu-toggle" name="menu-outline"></ion-icon>
+            <!-- search bar -->
+            <div class="search">
+                <input type="text" placeholder="What you want to eat?">
+                <button class="search-btn">Search</button>
+            </div>
+            <!-- profile icon on left side of navbar-->
+            <div class="profile">
+                <a class="cart" href="/cart"><ion-icon name="cart-outline"></ion-icon></a>
+            </div>
+        </div>
+        <!-- main highlight -->
+        <div class="main-highlight">
+            <!-- title section and arrow -->
+            <div class="main-header">
+                <h2 class="main-title">Recommendations</h2>
+                <div class="main-arrow">
+                    <ion-icon class="back" name="chevron-back-circle-outline"></ion-icon>
+                    <ion-icon class="next" name="chevron-forward-circle-outline"></ion-icon>
+                </div>
+            </div>
+            <!-- highlight menu -->
+            <div class="highlight-wrapper">
+                <div class="highlight-card">
+                    <img class="highlight-img" src="static/images/salad.jpg">
+                    <div class="highlight-desc">
+                        <h4>Fresh Salad</h4>
+                    </div>
+                </div>
+                <div class="highlight-card">
+                    <img class="highlight-img" src="static/images/coffee.jpg">
+                    <div class="highlight-desc">
+                        <h4>Cafe Latte</h4>
+                    </div>
+                </div>
+                <div class="highlight-card">
+                    <img class="highlight-img" src="static/images/steak.jpg">
+                    <div class="highlight-desc">
+                        <h4>Premium Steak</h4>
+                    </div>
+                </div>
+                <div class="highlight-card">
+                    <img class="highlight-img" src="static/images/burger.jpg">
+                    <div class="highlight-desc">
+                        <h4>Big Burger</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <hr class="divider">
+            <!-- list of food menus -->
+            <div class="main-detail" id="mainDetail" style="display: block;" >
+                <h2 class="main-title">Restaurants</h2>
+                <div class="detail-wrapper">
+                    {% for restaurant in restaurants %}
+                    <div class="detail-card" onclick="showMenu('{{ restaurant._id }}',event)">
+                        <img class="detail-img" src="{{ url_for('static', filename='images/' + restaurant.image) }}">
+                        <div class="detail-desc">
+                            <div class="detail-name">
+                                <h4>{{ restaurant.restaurant_name }}</h4>
+                                <p class="location">{{ restaurant.location }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="menu-content" style="display: none;">
+                <h2 class="main-title">Menu</h2>
+                <br><div id="message"></div><br>
+                <div class="detail-wrapper">
+                    {% for menu in menu_lists %}
+                    <div class="detail-card">
+                        <img class="detail-img" src="{{ url_for('static', filename='images/' + menu.item_image) }}">
+                        <div class="detail-desc">
+                            <div class="detail-name">
+                                <div class="item_name"><h4>{{ menu.item_name }}</h4></div>
+                                <div class="item_name"><p>&nbsp;&nbsp;&nbsp;&nbsp;${{menu.item_price}}</p></div>
+                                <p class="detail-sub">{% if menu.item_ingredient is defined and menu.item_ingredient is iterable %}
+                                    {% for ingredient in menu.item_ingredient %}
+                                        {{ ingredient }}
+                                        {% if not loop.last %}, {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <!-- Handle the case where item_ingredient is not an array or is undefined -->
+                                    N/A
+                                {% endif %}</p>
+                                <div class="item-actions">
+                                    <button class="add-to-cart-btn" onclick="addToCart('{{ menu._id }}')">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                <div>
+            <div>
+        </div>
+    </div>
+</body>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="static/js/customer.js"></script>
+</html>

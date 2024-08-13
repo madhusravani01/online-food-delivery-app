@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link type="text/css" href="static/style.css" rel="stylesheet"/>
+</head>
+<body>
+    <!-- sidebar -->
+    <div class="sidebar">
+        <!-- logo -->
+        <span class="logo">
+        <img src="static/images/logo_2.png"  width="80" height="60"> 
+        <h1>GourmetGo</h1>
+        </span>
+        
+        <!-- list of menus -->
+        <div class="sidebar-menus">
+            <a href="http://127.0.0.1:5000/user_homepage"><ion-icon name="storefront-outline"></ion-icon>Home</a>
+            <a href="http://127.0.0.1:5000/orders"><ion-icon name="chatbubbles-outline"></ion-icon>My Orders</a>
+            <a href="#"><ion-icon name="chatbubbles-outline"></ion-icon>Contact Us</a>
+            <a href="#"><ion-icon name="notifications-outline"></ion-icon>Notifications</a>
+            <a href="#"><ion-icon name="settings-outline"></ion-icon>Setting</a>
+        </div>
+
+         <!-- logout -->
+         <div class="sidebar-logout">
+            <a href="/logout"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+        </div>
+    </div>
+    <div class="small-container cart-page">
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+            {% for item_in_cart in items_in_cart %}
+            <tr>
+                <td>
+                    <div class="cart-info">
+                        <p>{{ item_in_cart['item_name'] }}</p><br>
+                    </div>
+                    <div>
+                        <small>Price: ${{ item_in_cart['item_price'] }}</small><br />
+                        <h3><a href="/remove/{{ item_in_cart['item_id'] }}/{{ order['_id'] }}">Remove</a><h3>
+                    </div>
+                </td>
+                <td>
+                    <div class="quantity">
+                        <button class="decrement" data-item-id="{{ item_in_cart['item_id'] }}">-</button>
+                        <span class="quantity-value">{{ item_in_cart['quantity'] }}</span>
+                        <button class="increment" data-item-id="{{ item_in_cart['item_id'] }}">+</button>
+                    </div>
+                </td>
+                <td>${{ item_in_cart['subtotal'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="total-price">
+            <table>
+                <tr>
+                    <td>Subtotal</td>
+                    <td>${{ subtotal }}</td>
+                </tr>
+                <tr>
+                    <td>Tax</td>
+                    <td>${{ tax }}</td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td>${{ total }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Proceed to payment button -->
+        <div class="total-price">
+            <button onclick="proceedToPayment()" class="checkout">Check Out</button>
+        </div>
+</body>
+</html>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script>
+    document.querySelectorAll('.quantity').forEach(quantity => {
+    const decrementButton = quantity.querySelector('.decrement');
+    const incrementButton = quantity.querySelector('.increment');
+    const quantityValue = quantity.querySelector('.quantity-value');
+
+    decrementButton.addEventListener('click', () => {
+        let currentValue = parseInt(quantityValue.textContent);
+        if (currentValue > 0) {
+            currentValue--;
+            quantityValue.textContent = currentValue;
+            updateCartItemQuantity(decrementButton.dataset.itemId, currentValue);
+        }
+    });
+
+    incrementButton.addEventListener('click', () => {
+        let currentValue = parseInt(quantityValue.textContent);
+        currentValue++;
+        quantityValue.textContent = currentValue;
+        updateCartItemQuantity(incrementButton.dataset.itemId, currentValue);
+    });
+});
+
+function proceedToPayment() {
+    window.location.href = "/payment";
+}
+
+function updateCartItemQuantity(item_id, quantity) {
+    fetch(`/update-cart/${item_id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ item_id: item_id, quantity: quantity })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to update quantity');
+        }
+        window.location.reload();
+    })
+    .catch(error => {
+        console.error('Error updating quantity:', error);
+    });
+
+   
+
+}
+</script>

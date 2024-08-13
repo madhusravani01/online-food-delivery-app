@@ -1,0 +1,99 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/user_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link type="text/css" href="static/style.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="sidebar">
+        <!-- logo -->
+        <span class="logo">
+            <img src="static/images/logo_2.png"  width="80" height="60"> 
+            <h1>GourmetGo</h1>
+        </span>
+            
+        <!-- list of menus -->
+        <div class="sidebar-menus">
+            <a href="http://127.0.0.1:5000/deliveryagent_homepage"><ion-icon name="storefront-outline"></ion-icon>Home</a>
+            <a href="http://127.0.0.1:5000/deliveryagent_orders"><ion-icon name="chatbubbles-outline"></ion-icon>Delivery Orders</a>
+            <a href="#"><ion-icon name="notifications-outline"></ion-icon>Notifications</a>
+            <a href="#"><ion-icon name="settings-outline"></ion-icon>Setting</a>
+        </div>
+
+        <!-- logout -->
+        <div class="sidebar-logout">
+            <a href="/logout"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+        </div>
+    </div>
+    <div class="table-container">
+        <div id="message"></div><br>
+        <div class="table-container">
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Status</th>
+                        <th>Restaurant Details</th>
+                        <th>Action</th>
+                        <!-- Add other relevant headers -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in order_data %}
+                        <tr>
+                            <td>{{ order['order_id'] }}</td>
+                            <td>{{ order['status'] }}</td>
+                            <td>{{ order['restaurant_name'] }} <br>
+                            <small>{{ order['location'] }}</small></td>
+                            <td style="text-align: center;">
+                                <div>
+                                    <button class=".accept" onclick="deliveredOrder('{{ order['order_id'] }}')">Delivered</button><br><br>                                
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script>
+    
+    function deliveredOrder(orderId) {
+        updateDeliveryStatus(orderId, 'delivered');
+    }
+    
+    function updateDeliveryStatus(orderId, status) {
+        fetch(`/update-order/${orderId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ status: status })
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json(); // If you expect a JSON response
+            } else {
+                throw new Error('Failed to update order status');
+            }
+        })
+        .then(data => {
+            // Handle the data or perform additional actions after a successful response
+            console.log('Success:', data);
+            // Redirect or update the UI based on the response
+            window.location.href = `/deliveryagent_orders`;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Handle errors or display error messages
+            message.textContent = 'Failed to update order status';
+        });
+    }
+</script>

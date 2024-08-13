@@ -1,0 +1,109 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/user_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link type="text/css" href="static/style.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="sidebar">
+        <!-- logo -->
+        <span class="logo">
+            <img src="static/images/logo_2.png"  width="80" height="60"> 
+            <h1>GourmetGo</h1>
+        </span>
+            
+        <!-- list of menus -->
+        <div class="sidebar-menus">
+            <a href="http://127.0.0.1:5000/manage_restaurants"><ion-icon name="chatbubbles-outline"></ion-icon>Manage Restaurants</a>
+            <a href="http://127.0.0.1:5000/manage_delivery_agents"><ion-icon name="notifications-outline"></ion-icon>Manage Delivery Agents</a>
+            <a href="#"><ion-icon name="settings-outline"></ion-icon>Setting</a>
+        </div>
+
+        <!-- logout -->
+        <div class="sidebar-logout">
+            <a href="/logout"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+        </div>
+    </div>
+    <div class="content1">
+        <div class="content2">
+            Enter Delivery Agent Details
+        </div>
+        <hr width="100%">
+        <br>
+        <p id="errorMessage" style="color: red;"></p>
+        <form id="orderForm" method="POST" action="/add_deliveryagent" enctype="multipart/form-data">
+        
+            <table>
+                <tr>
+                    <td><span class="heading">Delivery Agent Name</span></td>
+                    <td><input class="input_name" type='text' id='agentName' required></td>
+                </tr>
+                <tr>
+                    <td><span class="heading">Email Address</span></td>
+                    <td><input class="input_name" type='email' id='agentEmail' required></td>
+                </tr>
+                <tr>
+                    <td><span class="heading">Password</span></td>
+                    <td><input class="input_name" type='password' id='agentPassword' required></td>
+                </tr>
+                <tr>
+                    <td><span class="heading">Contact</span></td>
+                    <td><input class="input_name" type='number' id='agentContact' required></td>
+                </tr>
+                <!-- Additional fields for pincode, address, landmark, phone, payment, etc. -->
+            </table>
+            <br>
+            <button class=".button" id="add_agent" class="add_agent">Add Agent</button>
+        </form>
+    </div>    
+</body>
+</html>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script>
+    document.getElementById('add_agent').addEventListener('click', function(event) {
+        event.preventDefault();
+        
+        // Get input field values
+        let agentName = document.getElementById('agentName').value;
+        let agentEmail = document.getElementById('agentEmail').value;
+        let agentPassword = document.getElementById('agentPassword').value;
+        let agentContact = document.getElementById('agentContact').value;
+       
+    
+        // Create a FormData object to send form data including files
+        let formData = new FormData();
+        formData.append('agentName', agentName);
+        formData.append('agentEmail', agentEmail);
+        formData.append('agentPassword', agentPassword);
+        formData.append('agentContact', agentContact);
+    
+        // Send a POST request to the server with the FormData
+        fetch('/add_deliveryagent', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                // Redirect to manage_restaurants route on successful addition
+                window.location.href = '/manage_delivery_agents';
+            } else {
+                return response.json(); // Parse the error message from response
+            }
+        })
+        .then(data => {
+            // Display error message in the HTML content
+            let errorMessage = document.getElementById('errorMessage');
+            if (errorMessage) {
+                errorMessage.textContent = data.error; // Assuming the error message is sent from the server
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+    
+</script>

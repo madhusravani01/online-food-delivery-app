@@ -1,0 +1,73 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link type="text/css" href="static/style.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="sidebar">
+        <!-- logo -->
+        <span class="logo">
+            <img src="static/images/logo_2.png"  width="80" height="60"> 
+            <h1>GourmetGo</h1>
+        </span>
+            
+        <!-- list of menus -->
+        <div class="sidebar-menus">
+            <a href="http://127.0.0.1:5000/manage_restaurants"><ion-icon name="chatbubbles-outline"></ion-icon>Manage Restaurants</a>
+            <a href="http://127.0.0.1:5000/manage_delivery_agents"><ion-icon name="notifications-outline"></ion-icon>Manage Delivery Agents</a>
+            <a href="#"><ion-icon name="settings-outline"></ion-icon>Setting</a>
+        </div>
+
+        <!-- logout -->
+        <div class="sidebar-logout">
+            <a href="/logout"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+        </div>
+    </div>
+    <div class="table-container">
+        <h1>Restaurants</h1>
+        <div id="message"></div><br>
+        <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Restaurant ID</th>
+                        <th>Restaurant Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for restaurant in restaurants %}
+                        <tr>
+                            <td id = "restaurantId">{{ restaurant._id }}</td>
+                            <td>{{ restaurant.restaurant_name }}<br>
+                                {{ restaurant.location }}<br>
+                                {{restaurant.phone_number}}
+                            </td>
+        
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div>
+                <div "style=text-align:center">
+                    <button class = "button" onclick="addRestaurant()">Add Restaurant</button>
+                    <button class="button" onclick="deleteRestaurant()">Delete Restaurant</button>
+                </div>  
+            </div> 
+    </div>
+</body>
+</html>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script>
+
+    function addRestaurant() {
+        window.location.href = '/render_add_restaurant'; // Redirect to add_restaurant.html
+    }
+
+    function deleteRestaurant() {
+        window.location.href = '/render_delete_restaurant'; // Redirect to delete_restaurant.html
+    }
+</script>

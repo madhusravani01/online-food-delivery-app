@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link type="text/css" href="static/style.css" rel="stylesheet"/>
+</head>
+<body>
+    <!-- sidebar -->
+    <div class="sidebar">
+        <!-- logo -->
+        <span class="logo">
+        <img src="static/images/logo_2.png"  width="80" height="60"> 
+        <h1>GourmetGo</h1>
+        </span>
+        
+        <!-- list of menus -->
+        <div class="sidebar-menus">
+            <a href="http://127.0.0.1:5000/"><ion-icon name="storefront-outline"></ion-icon>Home</a>
+            <a href="#"><ion-icon name="chatbubbles-outline"></ion-icon>About Us</a>
+            <a href="#"><ion-icon name="chatbubbles-outline"></ion-icon>Contact Us</a>
+            <a href="#"><ion-icon name="notifications-outline"></ion-icon>Notifications</a>
+            <a href="#"><ion-icon name="settings-outline"></ion-icon>Setting</a>
+        </div>
+    </div>
+
+    <!-- main -->
+    <div class="main">
+        <!-- main navbar -->
+        <div class="main-navbar">
+            <!-- menu when appear on mobile version -->
+            <ion-icon class="menu-toggle" name="menu-outline"></ion-icon>
+        
+            <!-- profile icon on left side of navbar-->
+            <div class="profile">
+                <a class="user" href="#" onclick="openUserLoginForm(event)">
+                    <ion-icon name="person-outline"></ion-icon>
+                </a>
+            </div>
+        </div>
+        <!-- main highlight -->
+        <div class="main-highlight">
+            <!-- title section and arrow -->
+            <div class="main-header">
+                <h2 class="main-title">Cuisines</h2>
+                <div class="main-arrow">
+                    <ion-icon class="back" name="chevron-back-circle-outline"></ion-icon>
+                    <ion-icon class="next" name="chevron-forward-circle-outline"></ion-icon>
+                </div>
+            </div>
+            <!-- highlight menu -->
+            <div class="highlight-wrapper">
+                <div class="highlight-card">
+                    <img class="highlight-img" src="static/images/1.jpg">
+                    <div class="highlight-desc">
+                        <h3>Italian Cuisine</h3>
+                    </div>
+                </div>
+                <div class="highlight-card">
+                    <img class="highlight-img" src="static/images/1.jpg">
+                    <div class="highlight-desc">
+                        <h3>Japanese Cuisine</h3>
+                    </div>
+                </div>
+                <div class="highlight-card">
+                    <img class="highlight-img" src="static/images/2.jpg">
+                    <div class="highlight-desc">
+                        <h3>American Cuisine</h3>
+                    </div>
+                </div>
+                <div class="highlight-card">
+                    <img class="highlight-img" src="static/images/16.jpg">
+                    <div class="highlight-desc">
+                        <h3>Desserts</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- main menus / order -->
+        <div class="main-menus" id = "mainMenus">
+            <div class= "main-menu-child1">
+                <img src="static/images/homepage.png" width="600" height="600">
+            </div>
+            <div class= "main-menu-child2">
+                <h1 style="font-family: cursive;">"Your satisfaction is our priority. Sit back, relax, and let us take care of your meal.
+                    <br> Our curated menus are a symphony of taste and quality. 
+                    From savory classics to innovative delicacies, our chefs weave magic into every dish, ensuring a delightful experience with each order. <br>
+                    Your wallet will Thank you!"</h1>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="static/js/app.js"></script>
+</html>

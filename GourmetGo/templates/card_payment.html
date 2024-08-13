@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link type="text/css" href="static/style.css" rel="stylesheet"/>
+</head>
+<body>
+    <!-- sidebar -->
+    <div class="sidebar">
+        <!-- logo -->
+        <span class="logo">
+        <img src="static/images/logo_2.png"  width="80" height="60"> 
+        <h1>GourmetGo</h1>
+        </span>
+        
+        <!-- list of menus -->
+        <div class="sidebar-menus">
+            <a href="http://127.0.0.1:5000/user_homepage"><ion-icon name="storefront-outline"></ion-icon>Home</a>
+			<a href="http://127.0.0.1:5000/orders"><ion-icon name="chatbubbles-outline"></ion-icon>My Orders</a>
+            <a href="#"><ion-icon name="chatbubbles-outline"></ion-icon>Contact Us</a>
+            <a href="#"><ion-icon name="notifications-outline"></ion-icon>Notifications</a>
+            <a href="#"><ion-icon name="settings-outline"></ion-icon>Setting</a>
+        </div>
+		 <!-- logout -->
+		 <div class="sidebar-logout">
+            <a href="/logout"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+        </div>
+    </div>	
+	
+	<div class="content1">
+		<div class="content2">
+			<span class="payment">Payment details</span>
+			<img class="card_image" src="static/images/card.png"  width="160" height="30">
+		</div>
+		
+		<div class="content3">
+			<form name="form1" action = "/place_order?payment=card" method="POST">
+				<br>
+				<span class="heading">CARD NUMBER</span><br>
+				<input class="input_number" type='number' name='cardnumber' min="1000000000000000" required>
+				<br>
+				<br>
+				<span class="heading">CARD HOLDER NAME</span>
+				<input class="input_number"  type='text' name='name' required>
+				<br>
+				<br>
+				<span class="heading">EXPIRATION DATE</span>
+				<br>
+				<input class="input_month" type='number' name ="month" placeholder="MM" min="1" max="12" required>
+				<input class="input_year" type='number' name ="year" placeholder="YYYY" min="2017" max="2030" required>
+				<br>
+				<br>
+				<span class="heading">CVV</span>
+				<br>
+				<input class="input_cvv" type='number' name='cvv' max='999' required>
+				<br>					
+				<br>
+				<button class="place-order" type="submit" class="btn">Place Order</button>
+			</form>
+			<img class="card_bottom" src="static/images/card_bottom.JPG"  width="250" height="40">
+		</div>
+	</div>
+</body>
+</html>
+<script>
+	function placeOrder() {
+		window.location.href = '/place_order?payment=card';
+	}
+</script>
+	
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
